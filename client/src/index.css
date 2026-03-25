@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #0F1A2E;
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  button {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+}
+
+@layer utilities {
+  .section-padding {
+    @apply py-20 px-4;
+  }
+  .container-max {
+    @apply max-w-7xl mx-auto px-4;
+  }
+  .testimonials-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 1.5rem;
+  }
+  .testimonials-track::-webkit-scrollbar {
+    display: none;
+  }
+  .testimonial-card-mobile {
+    scroll-snap-align: start;
+    flex: 0 0 85vw;
+  }
+}
