@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Button } from '../ui/Button'
 import { useModal } from '../../context/ModalContext'
+import { QuoteForm } from '../forms/QuoteForm'
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }
 
@@ -103,36 +104,32 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right: Van animation — desktop only */}
+          {/* Right: Quote form — desktop only */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative hidden lg:flex items-center justify-center"
+            className="relative hidden lg:flex items-stretch justify-center"
           >
-            <div className="relative w-full" style={{ height: '320px' }}>
-              <motion.img
-                src="/smoke.png"
-                alt="smoke"
-                style={{ position: 'absolute', width: '42%', bottom: '8%', right: '2%', opacity: 0.85 }}
-                initial={{ x: 40, opacity: 0 }}
-                animate={{ x: 0, opacity: 0.85 }}
-                transition={{ type: 'spring', stiffness: 55, damping: 14, delay: 1.0 }}
-              />
-              <motion.img
-                src="/van_new.png"
-                alt="moving van"
-                style={{ position: 'absolute', width: '72%', bottom: '0%', left: '4%' }}
-                initial={{ x: 300, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.3 }}
-              />
+            <div
+              className="w-full rounded-3xl p-8 flex flex-col justify-center"
+              style={{
+                background: 'rgba(30,30,40,0.35)',
+                backdropFilter: 'blur(24px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15)',
+              }}
+            >
+              <h3 className="text-lg font-bold text-white mb-1">Get a Free Quote</h3>
+              <p className="text-xs text-white/50 mb-4">Response within 30 minutes</p>
+              <QuoteForm />
             </div>
           </motion.div>
         </div>
 
         {/* Stats bar */}
-        <div style={{ position: 'relative', zIndex: 10 }} className="mt-3 lg:mt-16 grid grid-cols-4 gap-2 lg:gap-6">
+        <div style={{ position: 'relative', zIndex: 10 }} className="mt-3 lg:mt-6 grid grid-cols-4 gap-2 lg:gap-6">
           {[
             { stat: '50K+', label: 'Moves Completed', delay: 2.1 },
             { stat: '50',   label: 'States Covered',  delay: 1.7 },

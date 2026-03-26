@@ -19,8 +19,10 @@ function Field({ label, error, children }) {
 }
 
 const inputCls = (err) =>
-  `w-full px-4 py-3 rounded-xl border text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange/30 ${
-    err ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-surface-gray-50 focus:border-brand-orange'
+  `w-full px-4 py-3 rounded-xl border text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange/40 text-white placeholder:text-white/40 ${
+    err
+      ? 'border-red-400/60 bg-white/10'
+      : 'border-white/20 bg-white/10 focus:border-brand-orange'
   }`
 
 export function QuoteForm() {
