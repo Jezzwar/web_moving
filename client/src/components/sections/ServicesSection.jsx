@@ -1,15 +1,83 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Home, Building2, Map, Package, ArrowRight } from 'lucide-react'
+import { Home, Building2, Map, Package } from 'lucide-react'
 import { SectionWrapper, fadeUpVariant } from '../ui/SectionWrapper'
-import { services } from '../../data/services'
+import { ServiceDrawer } from '../ui/ServiceDrawer'
 
-const iconMap = { Home, Building2, Map, Package }
+const services = [
+  {
+    id: 'residential',
+    Icon: Home,
+    title: 'Residential Moving',
+    description:
+      'Stress-free home moves for families. We handle packing, loading, transport, and setup with care — treating every item as if it were our own.',
+    features: [
+      'Full packing & unpacking service',
+      'Furniture disassembly & reassembly',
+      'Fragile item specialist wrapping',
+      'Same-day & weekend availability',
+      'Licensed & insured movers',
+    ],
+  },
+  {
+    id: 'commercial',
+    Icon: Building2,
+    title: 'Commercial Moving',
+    description:
+      'Minimize downtime with our efficient office and business relocation services. We work around your schedule — including nights and weekends.',
+    features: [
+      'After-hours & weekend moves',
+      'IT equipment & server room handling',
+      'Floor plan coordination',
+      'Secure chain-of-custody tracking',
+      'Dedicated project manager',
+    ],
+  },
+  {
+    id: 'long-distance',
+    Icon: Map,
+    title: 'Long Distance Moving',
+    description:
+      'Coast-to-coast moves with GPS-tracked trucks and real-time updates along the way. Flat-rate pricing with no hidden fees.',
+    features: [
+      'Real-time GPS tracking',
+      'Flat-rate guaranteed pricing',
+      'Cross-state licensing',
+      'Climate-controlled options',
+      'Delivery window guarantees',
+    ],
+  },
+  {
+    id: 'storage',
+    Icon: Package,
+    title: 'Storage Solutions',
+    description:
+      'Secure, climate-controlled storage units for short or long-term needs across the US. Month-to-month flexibility with 24/7 access.',
+    features: [
+      'Climate-controlled units',
+      '24/7 monitored security',
+      'Month-to-month rentals',
+      'Free pick-up & drop-off',
+      'Sizes from 5×5 to 20×20 ft',
+    ],
+  },
+]
 
 export function ServicesSection() {
+  const [activeService, setActiveService] = useState(null)
+
+  const openService = (service) =>
+    setActiveService({ ...service, icon: service.Icon })
+
+  const closeDrawer = () => setActiveService(null)
+
   return (
     <SectionWrapper id="services" className="py-8 lg:py-20 bg-surface-gray-50">
-      <motion.div variants={fadeUpVariant} className="text-center mb-8 lg:mb-14">
-        <span className="text-brand-orange font-semibold text-xs lg:text-sm uppercase tracking-widest">What We Offer</span>
+      {/* Heading */}
+      <motion.div variants={fadeUpVariant} className="text-center mb-8 lg:mb-12">
+        <span className="text-brand-orange font-semibold text-xs lg:text-sm uppercase tracking-widest">
+          What We Offer
+        </span>
         <h2 className="text-2xl lg:text-5xl font-extrabold text-brand-navy mt-1 lg:mt-2 mb-2 lg:mb-4">
           Our Moving Services
         </h2>
@@ -18,28 +86,50 @@ export function ServicesSection() {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
+      {/* Service buttons */}
+      <motion.div
+        variants={fadeUpVariant}
+        className="flex flex-wrap gap-3 justify-center"
+      >
         {services.map((service, i) => {
-          const Icon = iconMap[service.icon]
+          const { Icon } = service
           return (
-            <motion.div
+            <motion.button
               key={service.id}
-              variants={fadeUpVariant}
-              transition={{ delay: i * 0.08 }}
-              className="group bg-white rounded-2xl p-4 lg:p-6 shadow-card border border-gray-100 hover:-translate-y-1.5 hover:shadow-hover transition-all duration-300 cursor-pointer flex flex-col"
+              onClick={() => openService(service)}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.07, duration: 0.35, ease: 'easeOut' }}
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="group flex items-center gap-2.5 px-5 py-3 bg-white border border-gray-100 rounded-full shadow-card text-brand-navy font-semibold text-sm hover:border-brand-orange/30 hover:shadow-hover transition-all duration-200 cursor-pointer"
             >
-              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-brand-orange-pale rounded-xl flex items-center justify-center mb-3 lg:mb-5 group-hover:bg-brand-orange transition-colors duration-300 shrink-0">
-                <Icon size={18} className="text-brand-orange group-hover:text-white transition-colors duration-300" />
-              </div>
-              <h3 className="font-bold text-sm lg:text-lg text-brand-navy mb-1 lg:mb-2 leading-tight">{service.title}</h3>
-              <p className="text-gray-400 text-xs lg:text-sm leading-relaxed mb-3 lg:mb-4 flex-1">{service.description}</p>
-              <span className="inline-flex items-center gap-1 text-brand-orange text-xs lg:text-sm font-semibold group-hover:gap-2 transition-all duration-200">
-                Learn more <ArrowRight size={12} />
+              <span className="w-7 h-7 bg-brand-orange-pale rounded-full flex items-center justify-center group-hover:bg-brand-orange transition-colors duration-200 shrink-0">
+                <Icon
+                  size={14}
+                  className="text-brand-orange group-hover:text-white transition-colors duration-200"
+                />
               </span>
-            </motion.div>
+              {service.title}
+            </motion.button>
           )
         })}
-      </div>
+      </motion.div>
+
+      {/* Hint text */}
+      <motion.p
+        variants={fadeUpVariant}
+        className="text-center text-gray-300 text-xs mt-5 hidden lg:block"
+      >
+        Click any service to learn more
+      </motion.p>
+
+      {/* Drawer */}
+      <ServiceDrawer
+        service={activeService}
+        isOpen={!!activeService}
+        onClose={closeDrawer}
+      />
     </SectionWrapper>
   )
 }
